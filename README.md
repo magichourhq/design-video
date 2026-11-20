@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@magichourhq/editor-kit)](https://www.npmjs.com/package/@magichourhq/editor-kit)
 
-The video generation flow shared by Magic Hour's design editor apps for Framer, Adobe Express and Canva. A person picks an image or writes a brief, the app generates a short video with the [Magic Hour API](https://docs.magichour.ai), and the editor host inserts it into the design. It is built on [`@magichourhq/browser-client`](https://github.com/magichourhq/browser-client).
+The logic of the video generation flow shared by Magic Hour's design editor apps for Framer, Adobe Express and Canva. A person picks an image or writes a brief, the app generates a short video with the [Magic Hour API](https://docs.magichour.ai), and the editor host inserts it into the design. The package has no UI and no CSS. The Framer and Adobe Express apps carry their own plain-HTML panel on top of it. It is built on [`@magichourhq/browser-client`](https://github.com/magichourhq/browser-client).
 
 ```sh
 npm install @magichourhq/editor-kit
@@ -15,7 +15,7 @@ The accepted project ID is saved before the app waits, so a generation that was 
 
 ## Usage
 
-Everything for the video feature lives under the `DesignVideo` namespace, including its types. `DesignVideo.mountPanel(host, requireGenerationConsent = false)` renders a plain-HTML panel into `#root` and inserts its own `<style>` element once per document, so no CSS import is needed.
+Everything for the video feature lives under the `DesignVideo` namespace, including its types.
 
 An app describes its editor with a `DesignVideo.EditorHost`:
 
@@ -37,13 +37,11 @@ const host: DesignVideo.EditorHost = {
   // Adds the finished MP4 to the design. Throw a DesignVideo.EditorInsertionError to show a code.
   insertVideo: async ({ blob, url, id, credits, expiresAt }) => {},
 };
-
-DesignVideo.mountPanel(host);
 ```
 
-## Custom UI
+## Building a UI
 
-`DesignVideo.VideoPanel` holds the state without any UI framework or CSS. Subscribe to it from your own components, for example with React's `useSyncExternalStore`:
+`DesignVideo.VideoPanel` holds the state without any UI framework or CSS. Your app builds its own UI on it, for example with React's `useSyncExternalStore`:
 
 ```ts
 const panel = new DesignVideo.VideoPanel(host);
