@@ -1,11 +1,11 @@
-# Magic Hour Design Video
+# Magic Hour Editor Kit
 
-[![npm](https://img.shields.io/npm/v/@magichourhq/design-video)](https://www.npmjs.com/package/@magichourhq/design-video)
+[![npm](https://img.shields.io/npm/v/@magichourhq/editor-kit)](https://www.npmjs.com/package/@magichourhq/editor-kit)
 
 The video generation flow shared by Magic Hour's design editor apps for Framer, Adobe Express and Canva. A person picks an image or writes a brief, the app generates a short video with the [Magic Hour API](https://docs.magichour.ai), and the editor host inserts it into the design. It is built on [`@magichourhq/browser-client`](https://github.com/magichourhq/browser-client).
 
 ```sh
-npm install @magichourhq/design-video
+npm install @magichourhq/editor-kit
 ```
 
 > [!WARNING]
@@ -15,15 +15,15 @@ The accepted project ID is saved before the app waits, so a generation that was 
 
 ## Entry points
 
-`@magichourhq/design-video` has the logic and no CSS or DOM rendering: `VideoPanel`, `VideoService`, `EditorHost`, `EditorInsertionError`, `validateImage`, `projectId`, `videoMetadata`, `videoPoster` and `messageCatalog`.
+`@magichourhq/editor-kit` has the logic and no CSS or DOM rendering: `VideoPanel`, `VideoService`, `EditorHost`, `EditorInsertionError`, `validateImage`, `projectId`, `videoMetadata`, `videoPoster` and `messageCatalog`.
 
-`@magichourhq/design-video/panel` has `mountPanel(host, requireGenerationConsent = false)`. It renders a plain-HTML panel into `#root` and imports `style.css`, so your bundler (Vite, esbuild) includes the styles in its output.
+`@magichourhq/editor-kit/panel` has `mountPanel(host, requireGenerationConsent = false)`. It renders a plain-HTML panel into `#root` and imports `style.css`, so your bundler (Vite, esbuild) includes the styles in its output.
 
 An app describes its editor with an `EditorHost`:
 
 ```ts
-import type { EditorHost } from "@magichourhq/design-video";
-import { mountPanel } from "@magichourhq/design-video/panel";
+import type { EditorHost } from "@magichourhq/editor-kit";
+import { mountPanel } from "@magichourhq/editor-kit/panel";
 
 const host: EditorHost = {
   name: "Framer", // Used in the project name, "Magic Hour for Framer"
@@ -49,7 +49,7 @@ mountPanel(host);
 `VideoPanel` holds the state without any UI framework. Subscribe to it from your own components, for example with React's `useSyncExternalStore`:
 
 ```ts
-import { VideoPanel } from "@magichourhq/design-video";
+import { VideoPanel } from "@magichourhq/editor-kit";
 
 const panel = new VideoPanel(host);
 void panel.init(); // Loads a saved project ID from host.store
@@ -66,7 +66,7 @@ The state has `ready`, `busy`, `message`, `error`, `savedId`, `source` and `resu
 Every message has a fixed `id`. Pass `formatMessage` in the second argument of `VideoPanel` to translate them, and add `messageCatalog()` to your source-language file so your translators get the strings. Errors from the API come from `@magichourhq/browser-client`, which has its own `messageCatalog()`.
 
 ```ts
-import { messageCatalog } from "@magichourhq/design-video";
+import { messageCatalog } from "@magichourhq/editor-kit";
 import { messageCatalog as clientCatalog } from "@magichourhq/browser-client";
 
 const messagesEn = { ...clientCatalog(), ...messageCatalog() };

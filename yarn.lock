@@ -82,9 +82,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@magichourhq/design-video@workspace:.":
+"@magichourhq/editor-kit@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@magichourhq/design-video@workspace:."
+  resolution: "@magichourhq/editor-kit@workspace:."
   dependencies:
     "@magichourhq/browser-client": "npm:^0.3.2"
     "@types/node": "npm:^24.0.0"
