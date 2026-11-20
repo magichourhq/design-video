@@ -1,12 +1,9 @@
 import { expect, test } from "vitest";
-import {
-  VideoService,
-  VideoPanel,
-  type EditorHost,
-  type JobStore,
-  type VideoOptions,
-  validateImage,
-} from "../src/index.js";
+import { DesignVideo } from "../src/index.js";
+const { VideoService, VideoPanel, validateImage } = DesignVideo;
+type EditorHost = DesignVideo.EditorHost;
+type JobStore = DesignVideo.JobStore;
+type VideoOptions = DesignVideo.VideoOptions;
 const png = new Blob(
   [
     Buffer.from(

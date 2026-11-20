@@ -1,4 +1,4 @@
-.panel {
+export const panelCss = `.panel {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   color: #202333;
   background: #fff;
@@ -173,3 +173,4 @@ body {
     grid-template-columns: 1fr;
   }
 }
+`;

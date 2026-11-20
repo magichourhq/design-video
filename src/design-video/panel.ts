@@ -1,6 +1,14 @@
 import { VideoPanel, type EditorHost, type VideoOptions } from "./video.js";
-import "./style.css";
+import { panelCss } from "./style.js";
+const STYLE_ID = "magic-hour-editor-kit-style";
+
 export function mountPanel(host: EditorHost, requireGenerationConsent = false) {
+  if (!document.getElementById(STYLE_ID)) {
+    const style = document.createElement("style");
+    style.id = STYLE_ID;
+    style.textContent = panelCss;
+    document.head.append(style);
+  }
   const root = document.getElementById("root")!;
   root.innerHTML = `<main class="panel"><header><span class="brand">MAGIC HOUR</span><h1>Bring your images to life</h1><p>Create a short video for your design.</p></header>
   <label>Magic Hour API key<input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="Enter your API key"></label>

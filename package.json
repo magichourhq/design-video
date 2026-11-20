@@ -9,12 +9,9 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./panel": {
-      "types": "./dist/panel.d.ts",
-      "import": "./dist/panel.js"
     }
   },
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -23,7 +20,7 @@
     "url": "git+https://github.com/magichourhq/editor-kit.git"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && cp src/style.css src/style.d.css.ts dist/",
+    "build": "tsc -p tsconfig.json",
     "test": "vitest run",
     "check": "tsc --noEmit -p tsconfig.test.json",
     "prepack": "yarn build"

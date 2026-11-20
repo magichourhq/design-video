@@ -1,3 +1,2 @@
-export * from "./video.js";
-export * from "./media.js";
+export * as DesignVideo from "./design-video/index.js";
 export { messageCatalog } from "./messages.js";

@@ -4,7 +4,7 @@ import {
   englishMessage,
   type MessageFormatter,
 } from "@magichourhq/browser-client";
-import { messages } from "./messages.js";
+import { messages } from "../messages.js";
 
 export type SourceImage = { blob: Blob; label: string };
 export type VideoOptions = {

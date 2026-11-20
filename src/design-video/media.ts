@@ -1,5 +1,5 @@
 import { englishMessage, type MessageFormatter } from "@magichourhq/browser-client";
-import { messages } from "./messages.js";
+import { messages } from "../messages.js";
 export async function videoMetadata(
   blob: Blob,
   formatMessage: MessageFormatter = englishMessage

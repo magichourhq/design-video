@@ -13,19 +13,16 @@ npm install @magichourhq/editor-kit
 
 The accepted project ID is saved before the app waits, so a generation that was interrupted can be resumed without paying again.
 
-## Entry points
+## Usage
 
-`@magichourhq/editor-kit` has the logic and no CSS or DOM rendering: `VideoPanel`, `VideoService`, `EditorHost`, `EditorInsertionError`, `validateImage`, `projectId`, `videoMetadata`, `videoPoster` and `messageCatalog`.
+Everything for the video feature lives under the `DesignVideo` namespace, including its types. `DesignVideo.mountPanel(host, requireGenerationConsent = false)` renders a plain-HTML panel into `#root` and inserts its own `<style>` element once per document, so no CSS import is needed.
 
-`@magichourhq/editor-kit/panel` has `mountPanel(host, requireGenerationConsent = false)`. It renders a plain-HTML panel into `#root` and imports `style.css`, so your bundler (Vite, esbuild) includes the styles in its output.
-
-An app describes its editor with an `EditorHost`:
+An app describes its editor with a `DesignVideo.EditorHost`:
 
 ```ts
-import type { EditorHost } from "@magichourhq/editor-kit";
-import { mountPanel } from "@magichourhq/editor-kit/panel";
+import { DesignVideo } from "@magichourhq/editor-kit";
 
-const host: EditorHost = {
+const host: DesignVideo.EditorHost = {
   name: "Framer", // Used in the project name, "Magic Hour for Framer"
   selectionLabel: "Use selected image",
   // Optional. Returns the image selected in the editor.
@@ -37,21 +34,19 @@ const host: EditorHost = {
     load: async () => localStorage.getItem("project"),
     save: async (id) => (id ? localStorage.setItem("project", id) : localStorage.removeItem("project")),
   },
-  // Adds the finished MP4 to the design. Throw an EditorInsertionError to show a code.
+  // Adds the finished MP4 to the design. Throw a DesignVideo.EditorInsertionError to show a code.
   insertVideo: async ({ blob, url, id, credits, expiresAt }) => {},
 };
 
-mountPanel(host);
+DesignVideo.mountPanel(host);
 ```
 
 ## Custom UI
 
-`VideoPanel` holds the state without any UI framework. Subscribe to it from your own components, for example with React's `useSyncExternalStore`:
+`DesignVideo.VideoPanel` holds the state without any UI framework or CSS. Subscribe to it from your own components, for example with React's `useSyncExternalStore`:
 
 ```ts
-import { VideoPanel } from "@magichourhq/editor-kit";
-
-const panel = new VideoPanel(host);
+const panel = new DesignVideo.VideoPanel(host);
 void panel.init(); // Loads a saved project ID from host.store
 const state = useSyncExternalStore(panel.subscribe, panel.snapshot);
 
@@ -59,11 +54,11 @@ await panel.generate(apiKey, { prompt, duration: 5, resolution: "720p", aspectRa
 await panel.insert(apiKey);
 ```
 
-The state has `ready`, `busy`, `message`, `error`, `savedId`, `source` and `result`. Other methods are `capture()`, `selectFile(file)`, `removeImage()`, `resume(apiKey, projectId)`, `stop()`, `reset()` and `dispose()`.
+The state has `ready`, `busy`, `message`, `error`, `savedId`, `source` and `result`. Other methods are `capture()`, `selectFile(file)`, `removeImage()`, `resume(apiKey, projectId)`, `stop()`, `reset()` and `dispose()`. `DesignVideo` also has `VideoService`, `validateImage`, `projectId`, `videoMetadata` and `videoPoster`.
 
 ## Translations
 
-Every message has a fixed `id`. Pass `formatMessage` in the second argument of `VideoPanel` to translate them, and add `messageCatalog()` to your source-language file so your translators get the strings. Errors from the API come from `@magichourhq/browser-client`, which has its own `messageCatalog()`.
+Every message has a fixed `id`. Pass `formatMessage` in the second argument of `DesignVideo.VideoPanel` to translate them, and add `messageCatalog()` to your source-language file so your translators get the strings. Errors from the API come from `@magichourhq/browser-client`, which has its own `messageCatalog()`.
 
 ```ts
 import { messageCatalog } from "@magichourhq/editor-kit";
