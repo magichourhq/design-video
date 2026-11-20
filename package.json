@@ -1,0 +1,43 @@
+{
+  "name": "@magichourhq/design-video",
+  "version": "0.1.0",
+  "description": "Shared video generation flow for Magic Hour's design editor apps",
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "yarn@4.18.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./panel": {
+      "types": "./dist/panel.d.ts",
+      "import": "./dist/panel.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magichourhq/design-video.git"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && cp src/style.css src/style.d.css.ts dist/",
+    "test": "vitest run",
+    "check": "tsc --noEmit -p tsconfig.test.json",
+    "prepack": "yarn build"
+  },
+  "dependencies": {
+    "@magichourhq/browser-client": "^0.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
